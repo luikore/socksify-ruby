@@ -1,55 +1,34 @@
-class Color
-  class Reset
-    def self::to_s
-      "\e[0m\e[37m"
-    end
-  end
-
-  class Red < Color
-    def num; 31; end
-  end
-  class Green < Color
-    def num; 32; end
-  end
-  class Yellow < Color
-    def num; 33; end
-  end
-
-  def self::to_s
-    new.to_s
-  end
-
-  def to_s
-    "\e[1m\e[#{num}m"
-  end
-end
-
 module Socksify
-  def self.debug=(enabled)
-    @@debug = enabled
-  end
+  class << self
+    RED    = "\e[1m\e[31m"
+    GREEN  = "\e[1m\e[32m"
+    YELLOW = "\e[1m\e[33m"
+    RESET  = "\e[0m\e[37m"
 
-  def self.debug_debug(str)
-    debug(Color::Green, str)
-  end
+    attr_accessor :debug
 
-  def self.debug_notice(str)
-    debug(Color::Yellow, str)
-  end
-
-  def self.debug_error(str)
-    debug(Color::Red, str)
-  end
-
-  private
-
-  def self.debug(color, str)
-    if defined? @@debug
-      puts "#{color}#{now_s}#{Color::Reset} #{str}"
+    def debug_debug str
+      ouput GREEN, str
     end
-  end
 
-  def self.now_s
-    Time.now.strftime('%H:%M:%S')
+    def debug_notice str
+      ouput YELLOW, str
+    end
+
+    def debug_error str
+      ouput RED, str
+    end
+
+    private
+
+    def ouput color, str
+      if debug
+        puts "#{color}#{now_s}#{RESET} #{str}"
+      end
+    end
+
+    def now_s
+      Time.now.strftime('%H:%M:%S')
+    end
   end
 end
