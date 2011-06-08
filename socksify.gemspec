@@ -17,7 +17,6 @@ spec = Gem::Specification.new do |s|
   s.files = s.files.delete_if { |f| f =~ /\~$/ }
   s.require_path = 'lib'
   s.executables = %w{socksify_ruby}
-  s.has_rdoc = false
   s.extra_rdoc_files = Dir.glob("doc/**/*") + %w{COPYING}
 end
 
